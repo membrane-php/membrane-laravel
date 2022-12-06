@@ -9,6 +9,7 @@
   "require": {
     "php": "^8.1.0",
     "illuminate/http": "^9.0",
+    "illuminate/support": "^9.0",
     "nyholm/psr7": "^1.5",
     "membrane/membrane": "dev-api-builders",
     "symfony/psr-http-message-bridge": "^2.1"
@@ -23,5 +24,12 @@
       "type": "vcs",
       "url": "https://github.com/jrcharm/membrane-core"
     }
-  ]
+  ],
+  "extra": {
+    "laravel": {
+      "providers": [
+        "Membrane\\Laravel\\ServiceProvider"
+      ]
+    }
+  }
 }

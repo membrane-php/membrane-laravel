@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Membrane\Membrane;
 use Membrane\OpenAPI\Method;
+use Membrane\OpenAPI\Specification\Request as MembraneRequest;
 use Membrane\Result\Result;
 use Nyholm\Psr7\Factory\Psr17Factory;
 use Symfony\Bridge\PsrHttpMessage\Factory\PsrHttpFactory;
@@ -29,7 +30,7 @@ class RequestValidation
         $httpMessageFactory = new PsrHttpFactory($psr17Factory, $psr17Factory, $psr17Factory, $psr17Factory);
         $psr7Request = $httpMessageFactory->createRequest($request);
 
-        $specification = new \Membrane\OpenAPI\Specification\Request(
+        $specification = new MembraneRequest(
             $this->apiSpecPath,
             $psr7Request->getUri()->getPath(),
             $method

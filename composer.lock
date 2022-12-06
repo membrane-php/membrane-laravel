@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b332a1823315d2a12c585287c01d0d31",
+    "content-hash": "fdb4928e5aae7cfbdc2ee6cd4ffd2795",
     "packages": [
         {
             "name": "cebe/php-openapi",
