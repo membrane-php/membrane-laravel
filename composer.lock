@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "7fa9fa08cc230988df4e89ad1da8fcc5",
+    "content-hash": "d2effdc86b8b2ed511593a07b3757bcf",
     "packages": [
         {
             "name": "cebe/php-openapi",
@@ -388,7 +388,7 @@
         },
         {
             "name": "illuminate/filesystem",
-            "version": "v9.42.2",
+            "version": "v9.43.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/filesystem.git",
@@ -751,16 +751,16 @@
         },
         {
             "name": "membrane/membrane",
-            "version": "dev-api-spec",
+            "version": "dev-main",
             "source": {
                 "type": "git",
-                "url": "https://github.com/charjr/membrane-core.git",
-                "reference": "70d88b041d8c45d2af490d0da0775bdc09e75ebc"
+                "url": "https://github.com/membrane-php/membrane-core.git",
+                "reference": "1b5187fe82000d39d1e52d6f194a3992d14e58e2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/charjr/membrane-core/zipball/70d88b041d8c45d2af490d0da0775bdc09e75ebc",
-                "reference": "70d88b041d8c45d2af490d0da0775bdc09e75ebc",
+                "url": "https://api.github.com/repos/membrane-php/membrane-core/zipball/1b5187fe82000d39d1e52d6f194a3992d14e58e2",
+                "reference": "1b5187fe82000d39d1e52d6f194a3992d14e58e2",
                 "shasum": ""
             },
             "require": {
@@ -774,6 +774,7 @@
                 "phpunit/phpunit": "^9.5",
                 "squizlabs/php_codesniffer": "^3.7"
             },
+            "default-branch": true,
             "type": "library",
             "autoload": {
                 "psr-4": {
@@ -781,10 +782,12 @@
                     "Membrane\\Fixtures\\": "tests/fixtures/"
                 }
             },
+            "notification-url": "https://packagist.org/downloads/",
             "support": {
-                "source": "https://github.com/charjr/membrane-core/tree/api-spec"
+                "issues": "https://github.com/membrane-php/membrane-core/issues",
+                "source": "https://github.com/membrane-php/membrane-core/tree/main"
             },
-            "time": "2022-12-06T11:56:25+00:00"
+            "time": "2022-12-07T22:44:57+00:00"
         },
         {
             "name": "nesbot/carbon",
