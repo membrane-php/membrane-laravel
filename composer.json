@@ -3,7 +3,8 @@
   "type": "library",
   "autoload": {
     "psr-4": {
-      "Membrane\\Laravel\\": "src/"
+      "Membrane\\Laravel\\": "src/",
+      "Membrane\\Laravel\\Fixtures\\": "tests/fixtures/"
     }
   },
   "require": {
@@ -11,7 +12,7 @@
     "illuminate/http": "^9.0",
     "illuminate/support": "^9.0",
     "nyholm/psr7": "^1.5",
-    "membrane/membrane": "dev-api-builders",
+    "membrane/membrane": "dev-api-spec",
     "symfony/psr-http-message-bridge": "^2.1"
   },
   "require-dev": {
@@ -22,7 +23,7 @@
   "repositories": [
     {
       "type": "vcs",
-      "url": "https://github.com/jrcharm/membrane-core"
+      "url": "https://github.com/charjr/membrane-core"
     }
   ],
   "extra": {

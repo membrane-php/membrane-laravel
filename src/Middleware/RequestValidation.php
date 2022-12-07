@@ -5,44 +5,40 @@ declare(strict_types=1);
 namespace Membrane\Laravel\Middleware;
 
 use Closure;
-use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Membrane\Laravel\Http\Request as MembraneHttpRequest;
+use Membrane\Laravel\Http\Response as MembraneHttpResponse;
+use Membrane\Laravel\ToPsr7;
 use Membrane\Membrane;
-use Membrane\OpenAPI\Method;
-use Membrane\OpenAPI\Specification\Request as MembraneRequest;
-use Membrane\Result\Result;
-use Nyholm\Psr7\Factory\Psr17Factory;
-use Symfony\Bridge\PsrHttpMessage\Factory\PsrHttpFactory;
+use Membrane\OpenAPI\Specification\Request as MembraneRequestSpec;
 
 class RequestValidation
 {
+    private readonly Membrane $membrane;
+    private readonly ToPsr7 $toPsr7;
+
     public function __construct(
         private readonly string $apiSpecPath
     ) {
+        $this->membrane = new Membrane();
+        $this->toPsr7 = new ToPsr7();
     }
 
-    public function handle(Request $request, Closure $next): Closure|Response
+    public function handle(Request $request, Closure $next): Response
     {
-        $method = Method::tryFrom(strtolower($request->getMethod())) ?? throw new Exception('not supported');
+        $psr7Request = ($this->toPsr7)($request);
 
-        $psr17Factory = new Psr17Factory();
-        $httpMessageFactory = new PsrHttpFactory($psr17Factory, $psr17Factory, $psr17Factory, $psr17Factory);
-        $psr7Request = $httpMessageFactory->createRequest($request);
+        $specification = MembraneRequestSpec::fromPsr7($this->apiSpecPath, $psr7Request);
 
-        $specification = new MembraneRequest(
-            $this->apiSpecPath,
-            $psr7Request->getUri()->getPath(),
-            $method
-        );
-
-        $membrane = new Membrane();
-        $result = $membrane->process($psr7Request, $specification);
+        $result = $this->membrane->process($psr7Request, $specification);
 
         if (!$result->isValid()) {
-            return new Response('', 400);
+            return new MembraneHttpResponse(status: 400, result: $result);
         }
 
-        return $next($request->merge([Result::class => $result]));
+        $membraneRequest = MembraneHttpRequest::createFromResult($result, $request);
+
+        return $next($membraneRequest);
     }
 }
