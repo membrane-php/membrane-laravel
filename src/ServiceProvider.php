@@ -8,10 +8,10 @@ use Membrane\Laravel\Middleware\RequestValidation;
 
 class ServiceProvider extends \Illuminate\Support\ServiceProvider
 {
-
     public function boot(): void
     {
         $this->publishes([
+            /** @phpstan-ignore-next-line */ // Cannot 
             __DIR__ . '/../config/membrane.php' => config_path('membrane.php'),
         ]);
     }

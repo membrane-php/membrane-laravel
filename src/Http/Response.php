@@ -8,6 +8,7 @@ use Membrane\Result\Result;
 
 class Response extends \Illuminate\Http\Response
 {
+    /** @param mixed[] $headers */
     public function __construct(
         mixed $content = '',
         int $status = 200,
