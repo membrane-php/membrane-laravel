@@ -18,11 +18,14 @@ Require the `membrane/laravel` package in your composer.json and update your dep
 composer require membrane/laravel
 ```
 
-[//]: # (### Configuration)
+### Configuration
 
-[//]: # ()
+The defaults are set in `config/membrane.php`.  
+To publish a copy to your own config, use the following:
 
-[//]: # (No config options currently)
+```text
+php artisan vendor:publish --tag="membrane"
+```
 
 ### Global Usage
 

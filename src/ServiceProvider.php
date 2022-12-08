@@ -10,10 +10,8 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
 {
     public function boot(): void
     {
-        $this->publishes([
-            /** @phpstan-ignore-next-line */ // Cannot
-            __DIR__ . '/../config/membrane.php' => config_path('membrane.php'),
-        ]);
+        /** @phpstan-ignore-next-line */ // config_path is a laravel framework helper method
+        $this->publishes([__DIR__ . '/../config/membrane.php' => config_path('membrane.php')], ['membrane']);
     }
 
     public function register(): void
