@@ -6,12 +6,12 @@ namespace Membrane\Laravel\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use Membrane\Laravel\Http\Request as MembraneHttpRequest;
 use Membrane\Laravel\Http\Response as MembraneHttpResponse;
 use Membrane\Laravel\ToPsr7;
 use Membrane\Membrane;
 use Membrane\OpenAPI\Specification\Request as MembraneRequestSpec;
+use Symfony\Component\HttpFoundation\Response as SymfonyResponse;
 
 class RequestValidation
 {
@@ -25,7 +25,7 @@ class RequestValidation
         $this->toPsr7 = new ToPsr7();
     }
 
-    public function handle(Request $request, Closure $next): Response
+    public function handle(Request $request, Closure $next): SymfonyResponse
     {
         $psr7Request = ($this->toPsr7)($request);
 
