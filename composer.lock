@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d2effdc86b8b2ed511593a07b3757bcf",
+    "content-hash": "7506cd93973eaac1ff88a60c4a6309f4",
     "packages": [
         {
             "name": "cebe/php-openapi",
@@ -74,6 +74,77 @@
                 "source": "https://github.com/cebe/php-openapi"
             },
             "time": "2022-04-20T14:46:44+00:00"
+        },
+        {
+            "name": "crell/api-problem",
+            "version": "3.6.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Crell/ApiProblem.git",
+                "reference": "5acb0a8cc13ea740f631a60e5e73271c18e45803"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Crell/ApiProblem/zipball/5acb0a8cc13ea740f631a60e5e73271c18e45803",
+                "reference": "5acb0a8cc13ea740f631a60e5e73271c18e45803",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.1 || ^8.0"
+            },
+            "require-dev": {
+                "laminas/laminas-diactoros": "^2.0",
+                "phpstan/phpstan": "^1.3",
+                "phpunit/phpunit": "^7.0 || ^8.0 || ^9.0",
+                "psr/http-factory": "^1.0",
+                "psr/http-message": "1.*"
+            },
+            "suggest": {
+                "psr/http-factory": "Common interfaces for PSR-7 HTTP message factories",
+                "psr/http-message": "Common interface for HTTP messages"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Crell\\ApiProblem\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Larry Garfield",
+                    "email": "larry@garfieldtech.com",
+                    "homepage": "http://www.garfieldtech.com/"
+                }
+            ],
+            "description": "PHP wrapper for the api-problem IETF specification",
+            "homepage": "https://github.com/Crell/ApiProblem",
+            "keywords": [
+                "api-problem",
+                "http",
+                "json",
+                "rest",
+                "xml"
+            ],
+            "support": {
+                "issues": "https://github.com/Crell/ApiProblem/issues",
+                "source": "https://github.com/Crell/ApiProblem/tree/3.6.1"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/Crell",
+                    "type": "github"
+                }
+            ],
+            "time": "2022-01-04T15:47:30+00:00"
         },
         {
             "name": "doctrine/inflector",
@@ -755,12 +826,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/membrane-php/membrane-core.git",
-                "reference": "1b5187fe82000d39d1e52d6f194a3992d14e58e2"
+                "reference": "1a45819f5cf7b8dd9ad1b0865312ced67d03619e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/membrane-php/membrane-core/zipball/1b5187fe82000d39d1e52d6f194a3992d14e58e2",
-                "reference": "1b5187fe82000d39d1e52d6f194a3992d14e58e2",
+                "url": "https://api.github.com/repos/membrane-php/membrane-core/zipball/1a45819f5cf7b8dd9ad1b0865312ced67d03619e",
+                "reference": "1a45819f5cf7b8dd9ad1b0865312ced67d03619e",
                 "shasum": ""
             },
             "require": {
@@ -787,7 +858,7 @@
                 "issues": "https://github.com/membrane-php/membrane-core/issues",
                 "source": "https://github.com/membrane-php/membrane-core/tree/main"
             },
-            "time": "2022-12-07T22:44:57+00:00"
+            "time": "2022-12-09T15:32:38+00:00"
         },
         {
             "name": "nesbot/carbon",
@@ -3268,16 +3339,16 @@
         },
         {
             "name": "phpstan/phpstan",
-            "version": "1.9.2",
+            "version": "1.9.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan.git",
-                "reference": "d6fdf01c53978b6429f1393ba4afeca39cc68afa"
+                "reference": "709999b91448d4f2bb07daffffedc889b33e461c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/d6fdf01c53978b6429f1393ba4afeca39cc68afa",
-                "reference": "d6fdf01c53978b6429f1393ba4afeca39cc68afa",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/709999b91448d4f2bb07daffffedc889b33e461c",
+                "reference": "709999b91448d4f2bb07daffffedc889b33e461c",
                 "shasum": ""
             },
             "require": {
@@ -3307,7 +3378,7 @@
             ],
             "support": {
                 "issues": "https://github.com/phpstan/phpstan/issues",
-                "source": "https://github.com/phpstan/phpstan/tree/1.9.2"
+                "source": "https://github.com/phpstan/phpstan/tree/1.9.3"
             },
             "funding": [
                 {
@@ -3323,20 +3394,20 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-11-10T09:56:11+00:00"
+            "time": "2022-12-13T10:28:10+00:00"
         },
         {
             "name": "phpunit/php-code-coverage",
-            "version": "9.2.19",
+            "version": "9.2.20",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/php-code-coverage.git",
-                "reference": "c77b56b63e3d2031bd8997fcec43c1925ae46559"
+                "reference": "af7463c955007de36db0c5e26d03e2f933c2e980"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/php-code-coverage/zipball/c77b56b63e3d2031bd8997fcec43c1925ae46559",
-                "reference": "c77b56b63e3d2031bd8997fcec43c1925ae46559",
+                "url": "https://api.github.com/repos/sebastianbergmann/php-code-coverage/zipball/af7463c955007de36db0c5e26d03e2f933c2e980",
+                "reference": "af7463c955007de36db0c5e26d03e2f933c2e980",
                 "shasum": ""
             },
             "require": {
@@ -3392,7 +3463,7 @@
             ],
             "support": {
                 "issues": "https://github.com/sebastianbergmann/php-code-coverage/issues",
-                "source": "https://github.com/sebastianbergmann/php-code-coverage/tree/9.2.19"
+                "source": "https://github.com/sebastianbergmann/php-code-coverage/tree/9.2.20"
             },
             "funding": [
                 {
@@ -3400,7 +3471,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2022-11-18T07:47:47+00:00"
+            "time": "2022-12-13T07:49:28+00:00"
         },
         {
             "name": "phpunit/php-file-iterator",
@@ -3645,16 +3716,16 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "9.5.26",
+            "version": "9.5.27",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "851867efcbb6a1b992ec515c71cdcf20d895e9d2"
+                "reference": "a2bc7ffdca99f92d959b3f2270529334030bba38"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/851867efcbb6a1b992ec515c71cdcf20d895e9d2",
-                "reference": "851867efcbb6a1b992ec515c71cdcf20d895e9d2",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/a2bc7ffdca99f92d959b3f2270529334030bba38",
+                "reference": "a2bc7ffdca99f92d959b3f2270529334030bba38",
                 "shasum": ""
             },
             "require": {
@@ -3727,7 +3798,7 @@
             ],
             "support": {
                 "issues": "https://github.com/sebastianbergmann/phpunit/issues",
-                "source": "https://github.com/sebastianbergmann/phpunit/tree/9.5.26"
+                "source": "https://github.com/sebastianbergmann/phpunit/tree/9.5.27"
             },
             "funding": [
                 {
@@ -3743,7 +3814,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-10-28T06:00:21+00:00"
+            "time": "2022-12-09T07:31:23+00:00"
         },
         {
             "name": "sebastian/cli-parser",
@@ -4827,5 +4898,5 @@
         "php": "^8.1.0"
     },
     "platform-dev": [],
-    "plugin-api-version": "2.2.0"
+    "plugin-api-version": "2.3.0"
 }
