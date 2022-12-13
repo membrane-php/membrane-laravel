@@ -7,7 +7,6 @@ namespace Membrane\Laravel\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 use Membrane\Laravel\Http\Request as MembraneHttpRequest;
-use Membrane\Laravel\Http\Response as MembraneHttpResponse;
 use Membrane\Laravel\ToPsr7;
 use Membrane\Membrane;
 use Membrane\OpenAPI\Specification\Request as MembraneRequestSpec;
@@ -32,10 +31,6 @@ class RequestValidation
         $specification = MembraneRequestSpec::fromPsr7($this->apiSpecPath, $psr7Request);
 
         $result = $this->membrane->process($psr7Request, $specification);
-
-        if (!$result->isValid()) {
-            return new MembraneHttpResponse(status: 400, result: $result);
-        }
 
         $membraneRequest = MembraneHttpRequest::createFromResult($result, $request);
 
