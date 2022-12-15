@@ -15,7 +15,8 @@ use Symfony\Component\HttpFoundation\Response as SymfonyResponse;
 class ResponseJsonFlat
 {
     public function __construct(
-        private Container $container
+        private Container $container,
+        private ApiProblemBuilder $apiProblemBuilder
     ) {
     }
 
@@ -25,7 +26,7 @@ class ResponseJsonFlat
 
         assert($result instanceof Result);
         if (!$result->isValid()) {
-            return (new ApiProblemBuilder())->build(new JsonFlat($result));
+            return $this->apiProblemBuilder->build(new JsonFlat($result));
         }
 
         return $next($request);

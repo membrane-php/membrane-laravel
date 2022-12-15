@@ -19,5 +19,13 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
         $this->app->when(RequestValidation::class)
             ->needs('$apiSpecPath')
             ->giveConfig('membrane.api_spec_file');
+
+        $this->app->when(ApiProblemBuilder::class)
+            ->needs('$errorCode')
+            ->giveConfig('membrane.validation_error_response_code');
+
+        $this->app->when(ApiProblemBuilder::class)
+            ->needs('$errorType')
+            ->giveConfig('membrane.validation_error_response_type');
     }
 }

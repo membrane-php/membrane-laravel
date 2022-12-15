@@ -12,9 +12,17 @@ use Symfony\Component\HttpFoundation\Response as SymfonyResponse;
 
 class ApiProblemBuilder
 {
+    public function __construct(
+        private readonly int $errorCode,
+        private readonly string $errorType
+    ) {
+    }
+
     public function build(Renderer $renderer): SymfonyResponse
     {
-        $problem = (new ApiProblem('Request payload failed validation'))->setStatus(400);
+        $problem = (new ApiProblem('Request payload failed validation'))
+            ->setStatus($this->errorCode)
+            ->setType($this->errorType);
         $problem['errors'] = $renderer->jsonSerialize();
 
         $converter = new HttpConverter(new Psr17Factory());

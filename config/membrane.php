@@ -12,4 +12,17 @@ return [
     |
     */
     'api_spec_file' => base_path() . '/api/pets.yaml',
+
+    /*
+    |--------------------------------------------------------------------------
+    | Validation Error Response Customisation
+    |--------------------------------------------------------------------------
+    |
+    | Set the response code to the status code you want to return on error
+    | Set the url to the url you want to return on error
+    |
+    */
+    'validation_error_response_code' => 400,
+    'validation_error_response_type' => 'about:blank',
+
 ];
