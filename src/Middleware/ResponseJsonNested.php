@@ -7,11 +7,10 @@ namespace Membrane\Laravel\Middleware;
 use Closure;
 use Illuminate\Contracts\Container\Container;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use Membrane\Laravel\ApiProblemBuilder;
 use Membrane\Renderer\JsonNested;
 use Membrane\Result\Result;
-use Psr\Http\Message\ResponseInterface;
+use Symfony\Component\HttpFoundation\Response as SymfonyResponse;
 
 class ResponseJsonNested
 {
@@ -20,7 +19,7 @@ class ResponseJsonNested
     ) {
     }
 
-    public function handle(Request $request, Closure $next): Response|ResponseInterface
+    public function handle(Request $request, Closure $next): SymfonyResponse
     {
         $result = $this->container->get(Result::class);
 
