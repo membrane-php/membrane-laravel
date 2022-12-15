@@ -27,6 +27,18 @@ To publish a copy to your own config, use the following:
 php artisan vendor:publish --tag="membrane"
 ```
 
+#### API Spec File
+
+Set this as the **absolute path** to your OpenAPI Specification.
+
+#### Validation Error Response Code
+
+Set this to the integer value of the HTTP Status Code you want to return for invalid results.
+
+#### Validation Error Response Type
+
+Set this to the url that should return with the error.
+
 ### Usage
 
 #### Request Validation
@@ -43,7 +55,7 @@ Invalid requests will return a response detailing the reasons the request was in
 
 #### Flat Json Response
 
-The `ResponseJsonFlat` MUST precede the `RequestValidation` middleware 
+The `ResponseJsonFlat` MUST precede the `RequestValidation` middleware
 as it relies on the container containing the result.
 It will check whether the request has passed or failed validation.
 Invalid requests will return a response detailing the reasons the request was invalid.
