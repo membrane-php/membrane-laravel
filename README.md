@@ -27,10 +27,28 @@ To publish a copy to your own config, use the following:
 php artisan vendor:publish --tag="membrane"
 ```
 
-### Global Usage
+### Usage
 
-To validate requests for all your routes, add the `RequestValidation` middleware to `$middleware` property
-of  `app/Http/Kernel.php` class:
+#### Request Validation
+
+The `RequestValidation` middleware will validate or invalidate incoming requests and let you decide how to react.
+You can precede it with your own custom middleware or precede it with one of the following built-in options:
+
+#### Nested Json Response
+
+The `ResponseJsonNested` MUST precede the `RequestValidation` middleware
+as it relies on the container containing the result.
+It will check whether the request has passed or failed validation.
+Invalid requests will return a response detailing the reasons the request was invalid.
+
+#### Flat Json Response
+
+The `ResponseJsonFlat` MUST precede the `RequestValidation` middleware 
+as it relies on the container containing the result.
+It will check whether the request has passed or failed validation.
+Invalid requests will return a response detailing the reasons the request was invalid.
+
+### Global Usage
 
 ```php
 protected $middleware = [
@@ -38,6 +56,3 @@ protected $middleware = [
     // ...
 ];
 ```
-
-**Please note:** It is not required to be at the top of your middleware,
-but it must precede anything that relies on receiving a valid request.
