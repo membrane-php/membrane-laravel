@@ -4,38 +4,37 @@ declare(strict_types=1);
 
 namespace Membrane\Laravel\Middleware;
 
-use Illuminate\Http\Request as IlluminateRequest;
-use Membrane\Laravel\Http\Response as MembraneResponse;
+use Illuminate\Contracts\Container\Container;
+use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Membrane\Result\Result;
 use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \Membrane\Laravel\Middleware\RequestValidation
- * @uses   \Membrane\Laravel\Http\Request
- * @uses   \Membrane\Laravel\Http\Response
  * @uses   \Membrane\Laravel\ToPsr7
  */
 class RequestValidationTest extends TestCase
 {
     /** @test */
-    public function handleTest(): void
+    public function handleRegistersResultInstanceInContainer(): void
     {
-        $expected = new MembraneResponse(
-            result: Result::valid([
-            'path' => [],
-            'query' => [],
-            'header' => [],
-            'cookie' => [],
-            'body' => '',
-        ])
+        $expected = Result::valid([
+                'path' => [],
+                'query' => ['limit' => 5, 'tags' => ['cat', 'tabby']],
+                'header' => [],
+                'cookie' => [],
+                'body' => '',
+            ]
         );
-        $api = __DIR__ . '/../fixtures/petstore-expanded.json';
-        $sut = new RequestValidation($api);
-        $request = IlluminateRequest::create('/pets');
+        $container = self::createMock(Container::class);
+        $sut = new RequestValidation(__DIR__ . '/../fixtures/petstore-expanded.json', $container);
 
-        $actual = $sut->handle($request, fn($var) => new MembraneResponse(status: 200, result: $var->getResult()));
+        $container->expects(self::once())
+            ->method('instance')
+            ->with(Result::class, $expected);
 
-        self::assertEquals($expected, $actual);
+        $sut->handle(Request::create('/pets?limit=5&tags[]=cat&tags[]=tabby'), fn($var) => new Response());
     }
 
 }

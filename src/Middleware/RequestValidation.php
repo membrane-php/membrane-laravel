@@ -5,12 +5,13 @@ declare(strict_types=1);
 namespace Membrane\Laravel\Middleware;
 
 use Closure;
+use Illuminate\Contracts\Container\Container;
 use Illuminate\Http\Request;
-use Membrane\Laravel\Http\Request as MembraneHttpRequest;
+use Illuminate\Http\Response;
 use Membrane\Laravel\ToPsr7;
 use Membrane\Membrane;
 use Membrane\OpenAPI\Specification\Request as MembraneRequestSpec;
-use Symfony\Component\HttpFoundation\Response as SymfonyResponse;
+use Membrane\Result\Result;
 
 class RequestValidation
 {
@@ -18,22 +19,22 @@ class RequestValidation
     private readonly ToPsr7 $toPsr7;
 
     public function __construct(
-        private readonly string $apiSpecPath
+        private readonly string $apiSpecPath,
+        private Container $container
     ) {
         $this->membrane = new Membrane();
         $this->toPsr7 = new ToPsr7();
     }
 
-    public function handle(Request $request, Closure $next): SymfonyResponse
+    public function handle(Request $request, Closure $next): Response
     {
         $psr7Request = ($this->toPsr7)($request);
-
         $specification = MembraneRequestSpec::fromPsr7($this->apiSpecPath, $psr7Request);
 
         $result = $this->membrane->process($psr7Request, $specification);
 
-        $membraneRequest = MembraneHttpRequest::createFromResult($result, $request);
+        $this->container->instance(Result::class, $result);
 
-        return $next($membraneRequest);
+        return $next($request);
     }
 }

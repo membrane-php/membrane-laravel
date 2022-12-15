@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "7506cd93973eaac1ff88a60c4a6309f4",
+    "content-hash": "99e04182f21baab933baed80d6df447a",
     "packages": [
         {
             "name": "cebe/php-openapi",
@@ -822,16 +822,16 @@
         },
         {
             "name": "membrane/membrane",
-            "version": "dev-main",
+            "version": "0.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/membrane-php/membrane-core.git",
-                "reference": "1a45819f5cf7b8dd9ad1b0865312ced67d03619e"
+                "reference": "b36cf60e767b1313af92528e9eb3e838302d6d3c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/membrane-php/membrane-core/zipball/1a45819f5cf7b8dd9ad1b0865312ced67d03619e",
-                "reference": "1a45819f5cf7b8dd9ad1b0865312ced67d03619e",
+                "url": "https://api.github.com/repos/membrane-php/membrane-core/zipball/b36cf60e767b1313af92528e9eb3e838302d6d3c",
+                "reference": "b36cf60e767b1313af92528e9eb3e838302d6d3c",
                 "shasum": ""
             },
             "require": {
@@ -845,7 +845,6 @@
                 "phpunit/phpunit": "^9.5",
                 "squizlabs/php_codesniffer": "^3.7"
             },
-            "default-branch": true,
             "type": "library",
             "autoload": {
                 "psr-4": {
@@ -856,9 +855,9 @@
             "notification-url": "https://packagist.org/downloads/",
             "support": {
                 "issues": "https://github.com/membrane-php/membrane-core/issues",
-                "source": "https://github.com/membrane-php/membrane-core/tree/main"
+                "source": "https://github.com/membrane-php/membrane-core/tree/0.1.0"
             },
-            "time": "2022-12-09T15:32:38+00:00"
+            "time": "2022-12-14T12:06:47+00:00"
         },
         {
             "name": "nesbot/carbon",
@@ -3398,16 +3397,16 @@
         },
         {
             "name": "phpunit/php-code-coverage",
-            "version": "9.2.20",
+            "version": "9.2.21",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/php-code-coverage.git",
-                "reference": "af7463c955007de36db0c5e26d03e2f933c2e980"
+                "reference": "3f893e19712bb0c8bc86665d1562e9fd509c4ef0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/php-code-coverage/zipball/af7463c955007de36db0c5e26d03e2f933c2e980",
-                "reference": "af7463c955007de36db0c5e26d03e2f933c2e980",
+                "url": "https://api.github.com/repos/sebastianbergmann/php-code-coverage/zipball/3f893e19712bb0c8bc86665d1562e9fd509c4ef0",
+                "reference": "3f893e19712bb0c8bc86665d1562e9fd509c4ef0",
                 "shasum": ""
             },
             "require": {
@@ -3463,7 +3462,7 @@
             ],
             "support": {
                 "issues": "https://github.com/sebastianbergmann/php-code-coverage/issues",
-                "source": "https://github.com/sebastianbergmann/php-code-coverage/tree/9.2.20"
+                "source": "https://github.com/sebastianbergmann/php-code-coverage/tree/9.2.21"
             },
             "funding": [
                 {
@@ -3471,7 +3470,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2022-12-13T07:49:28+00:00"
+            "time": "2022-12-14T13:26:54+00:00"
         },
         {
             "name": "phpunit/php-file-iterator",
@@ -4889,9 +4888,7 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {
-        "membrane/membrane": 20
-    },
+    "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {

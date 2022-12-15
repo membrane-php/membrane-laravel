@@ -15,7 +15,7 @@ class ToPsr7Test extends TestCase
 {
 
     /** @test */
-    public function invokeTest(): void
+    public function invokeTurnsLaravelRequestIntoPsrRequest(): void
     {
         $sut = new ToPsr7();
         $request = Request::create('/pets/1');

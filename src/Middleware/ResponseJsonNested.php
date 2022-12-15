@@ -5,32 +5,28 @@ declare(strict_types=1);
 namespace Membrane\Laravel\Middleware;
 
 use Closure;
-use Crell\ApiProblem\ApiProblem;
-use Crell\ApiProblem\HttpConverter;
-use Membrane\Laravel\Http\Request as MembraneHttpRequest;
-use Membrane\Laravel\ToSymfony;
-use Nyholm\Psr7\Factory\Psr17Factory;
-use Symfony\Component\HttpFoundation\Response as SymfonyResponse;
+use Illuminate\Contracts\Container\Container;
+use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Membrane\Laravel\ApiProblemBuilder;
+use Membrane\Renderer\JsonNested;
+use Membrane\Result\Result;
+use Psr\Http\Message\ResponseInterface;
 
 class ResponseJsonNested
 {
-    public function handle(MembraneHttpRequest $request, Closure $next): SymfonyResponse
+    public function __construct(
+        private Container $container
+    ) {
+    }
+
+    public function handle(Request $request, Closure $next): Response|ResponseInterface
     {
-        $result = $request->getResult();
+        $result = $this->container->get(Result::class);
 
+        assert($result instanceof Result);
         if (!$result->isValid()) {
-            $renderer = new JsonNested($result);
-
-            $problem = (new ApiProblem('Request payload failed validation'))
-                ->setStatus(400);
-            $problem['errors'] = $renderer->jsonSerialize();
-
-            $factory = new Psr17Factory();
-            $converter = new HttpConverter($factory);
-            $response = $converter->toJsonResponse($problem);
-            $toSymfony = new ToSymfony();
-
-            return $toSymfony($response);
+            return (new ApiProblemBuilder())->build(new JsonNested($result));
         }
 
         return $next($request);
