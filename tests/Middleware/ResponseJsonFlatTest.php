@@ -61,6 +61,6 @@ class ResponseJsonFlatTest extends TestCase
 
         $actual = $sut->handle($request, fn($var) => new SymfonyResponse());
 
-        self::assertEquals($expected, $actual);
+        self::assertEqualsWithDelta($expected, $actual, 2);
     }
 }
