@@ -44,7 +44,7 @@ Set this to the url that should return with the error.
 #### Request Validation
 
 The `RequestValidation` middleware will validate or invalidate incoming requests and let you decide how to react.
-You can precede it with your own custom middleware or precede it with one of the following built-in options:
+You can floow it with your own custom middleware or with one of the following built-in options to produce an error response:
 
 #### Nested Json Response
 
