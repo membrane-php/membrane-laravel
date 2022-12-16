@@ -61,6 +61,7 @@ class ResponseJsonNestedTest extends TestCase
 
         $actual = $sut->handle($request, fn($var) => new SymfonyResponse());
 
-        self::assertEqualsWithDelta($expected, $actual, 2);
+        self::assertSame($expected->getStatusCode(), $actual->getStatusCode());
+        self::assertSame($expected->getContent(), $actual->getContent());
     }
 }
