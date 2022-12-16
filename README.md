@@ -48,14 +48,14 @@ You can precede it with your own custom middleware or precede it with one of the
 
 #### Nested Json Response
 
-The `ResponseJsonNested` MUST precede the `RequestValidation` middleware
+The `ResponseJsonNested` MUST follow the `RequestValidation` middleware
 as it relies on the container containing the result.
 It will check whether the request has passed or failed validation.
 Invalid requests will return a response detailing the reasons the request was invalid.
 
 #### Flat Json Response
 
-The `ResponseJsonFlat` MUST precede the `RequestValidation` middleware
+The `ResponseJsonFlat` MUST follow the `RequestValidation` middleware
 as it relies on the container containing the result.
 It will check whether the request has passed or failed validation.
 Invalid requests will return a response detailing the reasons the request was invalid.
