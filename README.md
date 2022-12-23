@@ -5,8 +5,8 @@ Integrates [Membrane-core](https://github.com/membrane-php/membrane-core) with [
 ## About
 
 Middleware that validates the raw user input from incoming HTTP requests against your OpenAPI spec.  
-Extends the `Illuminate\Http\Request` and `Illuminate\Http\Response` with a `Membrane\Result\Result` object containing
-the cleaned up data and additional details in the case of invalid requests.
+Adds a `Membrane\Result\Result` onto your `Illuminate\Contracts\Container\Container`.  
+The Result object contains the cleaned up data and additional details in the case of invalid requests.
 
 ## Setup
 
