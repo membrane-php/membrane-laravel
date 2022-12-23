@@ -24,5 +24,6 @@ return [
     */
     'validation_error_response_code' => 400,
     'validation_error_response_type' => 'about:blank',
+    'api_problem_response_types' => [],
 
 ];

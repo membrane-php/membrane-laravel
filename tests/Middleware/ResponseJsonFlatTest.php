@@ -51,7 +51,7 @@ class ResponseJsonFlatTest extends TestCase
     {
         $request = self::createStub(Request::class);
         $container = self::createMock(Container::class);
-        $apiProblemBuilder = new ApiProblemBuilder(400, 'about:blank');
+        $apiProblemBuilder = new ApiProblemBuilder(400, 'about:blank', []);
         $sut = new ResponseJsonFlat($container, $apiProblemBuilder);
 
         $container->expects(self::once())

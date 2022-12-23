@@ -31,5 +31,8 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
         $this->app->when(ApiProblemBuilder::class)
             ->needs('$errorType')
             ->giveConfig('membrane.validation_error_response_type');
+        $this->app->when(ApiProblemBuilder::class)
+            ->needs('$apiProblemTypes')
+            ->giveConfig('membrane.api_response_types');
     }
 }

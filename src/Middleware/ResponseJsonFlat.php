@@ -26,7 +26,7 @@ class ResponseJsonFlat
 
         assert($result instanceof Result);
         if (!$result->isValid()) {
-            return $this->apiProblemBuilder->build(new JsonFlat($result));
+            return $this->apiProblemBuilder->buildFromRenderer(new JsonFlat($result));
         }
 
         return $next($request);
