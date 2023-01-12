@@ -29,42 +29,102 @@ php artisan vendor:publish --tag="membrane"
 
 #### API Spec File
 
-Set this as the **absolute path** to your OpenAPI Specification.
+Set `'api_spec_file'` to the **string** value of the **absolute path** to your OpenAPI Specification.
 
 #### Validation Error Response Code
 
-Set this to the integer value of the HTTP Status Code you want to return for invalid results.
+Set `'validation_error_response_code'` to the **integer** value of the default http status code for invalid results.
 
 #### Validation Error Response Type
 
-Set this to the url that should return with the error.
+Set `'validation_error_response_type'` to the **string** value of the default response type for API problems.
 
-### Usage
+#### API Problem Response Types
 
-#### Request Validation
+Within the `'api_problem_response_types'` array:
+Set **integer** http status code => **string** response type pairs.  
+These are more specific and will override the default value set by `'validation_error_response_type'`
 
-The `RequestValidation` middleware will validate or invalidate incoming requests and let you decide how to react.
-You can follow it with your own custom middleware or with one of the following built-in options to produce an error response:
+## Usage
 
-#### Nested Json Response
+### Requests
 
-The `ResponseJsonNested` MUST follow the `RequestValidation` middleware
-as it relies on the container containing the result.
-It will check whether the request has passed or failed validation.
-Invalid requests will return a response detailing the reasons the request was invalid.
+The `\Membrane\Laravel\Middleware\RequestValidation` middleware will validate or invalidate incoming requests and let
+you decide
+how to react.
+You can follow it with your own custom middleware or with one of the following built-in options to produce an error
+response:
 
-#### Flat Json Response
+### Responses
 
-The `ResponseJsonFlat` MUST follow the `RequestValidation` middleware
-as it relies on the container containing the result.
-It will check whether the request has passed or failed validation.
-Invalid requests will return a response detailing the reasons the request was invalid.
+Any response middleware MUST follow the `RequestValidation` middleware as it requires the `result` object being added to
+your container.  
+These middlewares will check whether the request has passed or failed validation.  
+Invalid requests will return an appropriate response detailing the reasons the request was invalid.
+
+Your response can be in one of the following formats.
+
+#### Flat Json
+
+`\Membrane\Laravel\Middleware\ResponseJsonFlat`
+
+**Example Output**
+
+```text
+{
+    "errors":{
+        "pet->id":["must be an integer"],
+        "pet":["name is a required field"]
+    },
+    "title":"Request payload failed validation",
+    "type":"about:blank",
+    "status":400
+}
+```
+
+#### Nested Json
+
+`\Membrane\Laravel\Middleware\ResponseJsonNested`
+
+**Example Output**
+
+```text
+{
+    "errors":{
+        "errors":[],
+        "fields":{
+            "pet":{
+                "errors":[
+                    "name is a required field"
+                ],
+                "fields":{
+                    "id":{
+                        "errors":[
+                            "must be an integer"
+                        ],
+                        "fields":[]
+                    }
+                }
+            }
+        }
+    },
+    "title":"Request payload failed validation",
+    "type":"about:blank",
+    "status":400
+}
+```
 
 ### Global Usage
+
+To use any of the above middlewares on all routes, go into your `app/Http/Kernel.php` and add them to your `middleware`
+array.
+
+For example:
 
 ```php
 protected $middleware = [
   \Membrane\Laravel\RequestValidation::class,
+  \Membrane\Laravel\Middleware\ResponseJsonFlat::class
     // ...
 ];
 ```

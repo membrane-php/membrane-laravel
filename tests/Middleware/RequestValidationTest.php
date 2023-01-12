@@ -7,18 +7,24 @@ namespace Membrane\Laravel\Middleware;
 use Illuminate\Contracts\Container\Container;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Membrane\Laravel\ApiProblemBuilder;
+use Membrane\OpenAPI\Exception\CannotProcessRequest;
+use Membrane\OpenAPI\Method;
 use Membrane\Result\Result;
 use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \Membrane\Laravel\Middleware\RequestValidation
+ * @uses   \Membrane\Laravel\ApiProblemBuilder
  * @uses   \Membrane\Laravel\ToPsr7
+ * @uses   \Membrane\Laravel\ToSymfony
  */
 class RequestValidationTest extends TestCase
 {
     /** @test */
-    public function handleRegistersResultInstanceInContainer(): void
+    public function registersResultInstanceInContainer(): void
     {
+        $url = '/pets?limit=5&tags[]=cat&tags[]=tabby';
         $expected = Result::valid([
                 'path' => [],
                 'query' => ['limit' => 5, 'tags' => ['cat', 'tabby']],
@@ -27,14 +33,54 @@ class RequestValidationTest extends TestCase
                 'body' => '',
             ]
         );
+        $apiProblemBuilder = self::createStub(ApiProblemBuilder::class);
         $container = self::createMock(Container::class);
-        $sut = new RequestValidation(__DIR__ . '/../fixtures/petstore-expanded.json', $container);
+        $sut = new RequestValidation(__DIR__ . '/../fixtures/petstore-expanded.json', $apiProblemBuilder, $container);
 
         $container->expects(self::once())
             ->method('instance')
             ->with(Result::class, $expected);
 
-        $sut->handle(Request::create('/pets?limit=5&tags[]=cat&tags[]=tabby'), fn($var) => new Response());
+        $sut->handle(Request::create($url), fn($var) => new Response());
+    }
+
+    public function dataSetsThatThrowCannotProcessRequest(): array
+    {
+        return [
+            'path not found' => [
+                '/hats',
+                Method::GET,
+                CannotProcessRequest::pathNotFound('petstore-expanded.json', '/hats'),
+            ],
+            'method not found' => [
+                '/pets',
+                Method::DELETE,
+                CannotProcessRequest::methodNotFound(Method::DELETE->value),
+            ],
+            // TODO test 406 from unsupported content-types once Membrane is reading content-types from requests
+        ];
+    }
+
+
+    /**
+     * @test
+     * @dataProvider dataSetsThatThrowCannotProcessRequest
+     */
+    public function catchesCannotProcessRequest(string $path, Method $method, CannotProcessRequest $expected): void
+    {
+        $apiProblemBuilder = self::createMock(ApiProblemBuilder::class);
+        $sut = new RequestValidation(
+            __DIR__ . '/../fixtures/petstore-expanded.json',
+            $apiProblemBuilder,
+            self::createStub(Container::class)
+        );
+
+        $apiProblemBuilder
+            ->expects($this->once())
+            ->method('buildFromException')
+            ->with($expected);
+
+        $sut->handle(Request::create($path, $method->value), fn($p) => new Response());
     }
 
 }

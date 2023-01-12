@@ -7,8 +7,10 @@ namespace Membrane\Laravel\Middleware;
 use Closure;
 use Illuminate\Contracts\Container\Container;
 use Illuminate\Http\Request;
+use Membrane\Laravel\ApiProblemBuilder;
 use Membrane\Laravel\ToPsr7;
 use Membrane\Membrane;
+use Membrane\OpenAPI\Exception\CannotProcessRequest;
 use Membrane\OpenAPI\Specification\Request as MembraneRequestSpec;
 use Membrane\Result\Result;
 use Symfony\Component\HttpFoundation\Response as SymfonyResponse;
@@ -20,6 +22,7 @@ class RequestValidation
 
     public function __construct(
         private readonly string $apiSpecPath,
+        private readonly ApiProblemBuilder $apiProblemBuilder,
         private Container $container
     ) {
         $this->membrane = new Membrane();
@@ -29,7 +32,12 @@ class RequestValidation
     public function handle(Request $request, Closure $next): SymfonyResponse
     {
         $psr7Request = ($this->toPsr7)($request);
-        $specification = MembraneRequestSpec::fromPsr7($this->apiSpecPath, $psr7Request);
+
+        try {
+            $specification = MembraneRequestSpec::fromPsr7($this->apiSpecPath, $psr7Request);
+        } catch (CannotProcessRequest $e) {
+            return $this->apiProblemBuilder->buildFromException($e);
+        }
 
         $result = $this->membrane->process($psr7Request, $specification);
 
