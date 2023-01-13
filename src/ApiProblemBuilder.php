@@ -13,11 +13,11 @@ use Symfony\Component\HttpFoundation\Response as SymfonyResponse;
 
 class ApiProblemBuilder
 {
-    /** @param string[] $apiResponseTypes */
+    /** @param string[] $apiProblemTypes */
     public function __construct(
         private readonly int $errorCode,
         private readonly string $errorType,
-        private readonly array $apiResponseTypes
+        private readonly array $apiProblemTypes
     ) {
     }
 
@@ -50,7 +50,7 @@ class ApiProblemBuilder
 
         $problem = (new ApiProblem(SymfonyResponse::$statusTexts[$errorCode]))
             ->setStatus($errorCode)
-            ->setType($this->apiResponseTypes[$errorCode] ?? $this->errorType)
+            ->setType($this->apiProblemTypes[$errorCode] ?? $this->errorType)
             ->setDetail($exception->getMessage());
 
         return $this->convertToResponse($problem);

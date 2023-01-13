@@ -33,6 +33,6 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
             ->giveConfig('membrane.validation_error_response_type');
         $this->app->when(ApiProblemBuilder::class)
             ->needs('$apiProblemTypes')
-            ->giveConfig('membrane.api_response_types');
+            ->giveConfig('membrane.api_problem_response_types');
     }
 }
