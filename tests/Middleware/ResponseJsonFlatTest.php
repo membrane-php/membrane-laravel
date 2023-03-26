@@ -7,18 +7,22 @@ namespace Membrane\Laravel\Middleware;
 use Illuminate\Contracts\Container\Container;
 use Illuminate\Http\Request;
 use Membrane\Laravel\ApiProblemBuilder;
+use Membrane\Laravel\ToSymfony;
 use Membrane\Result\FieldName;
 use Membrane\Result\Message;
 use Membrane\Result\MessageSet;
 use Membrane\Result\Result;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Test;
+use PHPUnit\Framework\Attributes\UsesClass;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Response as SymfonyResponse;
 
-/**
- * @covers \Membrane\Laravel\Middleware\ResponseJsonFlat
- * @uses   \Membrane\Laravel\ApiProblemBuilder
- * @uses   \Membrane\Laravel\ToSymfony
- */
+
+#[CoversClass(ResponseJsonFlat::class)]
+#[UsesClass(ApiProblemBuilder::class)]
+#[UsesClass(ToSymfony::class)]
 class ResponseJsonFlatTest extends TestCase
 {
     public static function dataSetsToHandle(): array
@@ -43,10 +47,8 @@ class ResponseJsonFlatTest extends TestCase
         ];
     }
 
-    /**
-     * @test
-     * @dataProvider dataSetsToHandle
-     */
+    #[Test]
+    #[DataProvider('dataSetsToHandle')]
     public function handleTest(Result $result, SymfonyResponse $expected): void
     {
         $request = self::createStub(Request::class);

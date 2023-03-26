@@ -11,14 +11,17 @@ use Membrane\Result\FieldName;
 use Membrane\Result\Message;
 use Membrane\Result\MessageSet;
 use Membrane\Result\Result;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Test;
+use PHPUnit\Framework\Attributes\UsesClass;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Response as SymfonyResponse;
 
-/**
- * @covers \Membrane\Laravel\Middleware\ResponseJsonNested
- * @uses   \Membrane\Laravel\ApiProblemBuilder
- * @uses   \Membrane\Laravel\ToSymfony
- */
+
+#[CoversClass('\Membrane\Laravel\Middleware\ResponseJsonNested')]
+#[UsesClass('  \Membrane\Laravel\ApiProblemBuilder')]
+#[UsesClass('  \Membrane\Laravel\ToSymfony')]
 class ResponseJsonNestedTest extends TestCase
 {
     public static function dataSetsToHandle(): array
@@ -43,10 +46,8 @@ class ResponseJsonNestedTest extends TestCase
         ];
     }
 
-    /**
-     * @test
-     * @dataProvider dataSetsToHandle
-     */
+    #[Test]
+    #[DataProvider('dataSetsToHandle')]
     public function handleTest(Result $result, SymfonyResponse $expected): void
     {
         $request = self::createStub(Request::class);
