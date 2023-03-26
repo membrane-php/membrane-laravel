@@ -44,7 +44,7 @@ class RequestValidationTest extends TestCase
         $sut->handle(Request::create($url), fn($var) => new Response());
     }
 
-    public function dataSetsThatThrowCannotProcessRequest(): array
+    public static function dataSetsThatThrowCannotProcessRequest(): array
     {
         return [
             'path not found' => [

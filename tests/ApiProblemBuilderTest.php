@@ -40,7 +40,7 @@ class ApiProblemBuilderTest extends TestCase
         self::assertEquals($expected, json_decode($actual->getContent(), true));
     }
 
-    public function dataSetsToBuildFromException(): array
+    public static function dataSetsToBuildFromException(): array
     {
         return [
             'path not found, no apiResponseTypes' => [

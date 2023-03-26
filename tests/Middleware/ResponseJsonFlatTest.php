@@ -21,7 +21,7 @@ use Symfony\Component\HttpFoundation\Response as SymfonyResponse;
  */
 class ResponseJsonFlatTest extends TestCase
 {
-    public function dataSetsToHandle(): array
+    public static function dataSetsToHandle(): array
     {
         return [
             'valid results return valid responses' => [
