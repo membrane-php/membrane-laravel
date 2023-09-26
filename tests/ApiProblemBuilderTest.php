@@ -6,17 +6,19 @@ namespace Membrane\Laravel;
 
 use Membrane\OpenAPI\Exception\CannotProcessRequest;
 use Membrane\Renderer\Renderer;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Test;
+use PHPUnit\Framework\Attributes\UsesClass;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Response as SymfonyResponse;
 
-/**
- * @covers \Membrane\Laravel\ApiProblemBuilder
- * @uses   \Membrane\Laravel\ToSymfony
- */
+#[CoversClass(ApiProblemBuilder::class)]
+#[UsesClass(ToSymfony::class)]
 class ApiProblemBuilderTest extends TestCase
 {
 
-    /** @test */
+    #[Test]
     public function buildFromRendererTest(): void
     {
         $expected = [
@@ -40,7 +42,7 @@ class ApiProblemBuilderTest extends TestCase
         self::assertEquals($expected, json_decode($actual->getContent(), true));
     }
 
-    public function dataSetsToBuildFromException(): array
+    public static function dataSetsToBuildFromException(): array
     {
         return [
             'path not found, no apiResponseTypes' => [
@@ -90,11 +92,9 @@ class ApiProblemBuilderTest extends TestCase
             ],
         ];
     }
-
-    /**
-     * @test
-     * @dataProvider dataSetsToBuildFromException
-     */
+    
+    #[Test]
+    #[DataProvider('dataSetsToBuildFromException')]
     public function buildFromExceptionTest(
         CannotProcessRequest $exception,
         SymfonyResponse $expected,

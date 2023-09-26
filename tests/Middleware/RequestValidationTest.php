@@ -8,20 +8,25 @@ use Illuminate\Contracts\Container\Container;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Membrane\Laravel\ApiProblemBuilder;
+use Membrane\Laravel\ToPsr7;
+use Membrane\Laravel\ToSymfony;
 use Membrane\OpenAPI\Exception\CannotProcessRequest;
 use Membrane\OpenAPI\Method;
 use Membrane\Result\Result;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Test;
+use PHPUnit\Framework\Attributes\UsesClass;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \Membrane\Laravel\Middleware\RequestValidation
- * @uses   \Membrane\Laravel\ApiProblemBuilder
- * @uses   \Membrane\Laravel\ToPsr7
- * @uses   \Membrane\Laravel\ToSymfony
- */
+
+#[CoversClass(RequestValidation::class)]
+#[UsesClass(ApiProblemBuilder::class)]
+#[UsesClass(ToPsr7::class)]
+#[UsesClass(ToSymfony::class)]
 class RequestValidationTest extends TestCase
 {
-    /** @test */
+    #[Test]
     public function registersResultInstanceInContainer(): void
     {
         $url = '/pets?limit=5&tags[]=cat&tags[]=tabby';
@@ -44,7 +49,7 @@ class RequestValidationTest extends TestCase
         $sut->handle(Request::create($url), fn($var) => new Response());
     }
 
-    public function dataSetsThatThrowCannotProcessRequest(): array
+    public static function dataSetsThatThrowCannotProcessRequest(): array
     {
         return [
             'path not found' => [
@@ -62,10 +67,8 @@ class RequestValidationTest extends TestCase
     }
 
 
-    /**
-     * @test
-     * @dataProvider dataSetsThatThrowCannotProcessRequest
-     */
+    #[Test]
+    #[DataProvider('dataSetsThatThrowCannotProcessRequest')]
     public function catchesCannotProcessRequest(string $path, Method $method, CannotProcessRequest $expected): void
     {
         $apiProblemBuilder = self::createMock(ApiProblemBuilder::class);
