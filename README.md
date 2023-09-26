@@ -68,8 +68,6 @@ Your response can be in one of the following formats.
 
 `\Membrane\Laravel\Middleware\ResponseJsonFlat`
 
-**Example Output**
-
 ```text
 {
     "errors":{
@@ -85,8 +83,6 @@ Your response can be in one of the following formats.
 #### Nested Json
 
 `\Membrane\Laravel\Middleware\ResponseJsonNested`
-
-**Example Output**
 
 ```text
 {
