@@ -11,10 +11,10 @@
   "require": {
     "php": "^8.1.0",
     "crell/api-problem": "^3.6.1",
-    "illuminate/http": "^9.0",
-    "illuminate/support": "^9.0",
+    "illuminate/http": "^9.0 || ^10.0",
+    "illuminate/support": "^9.0 || ^10.0",
     "nyholm/psr7": "^1.5",
-    "membrane/membrane": "^0.2.0",
+    "membrane/membrane": "^0.3.0",
     "symfony/psr-http-message-bridge": "^2.1"
   },
   "require-dev": {
