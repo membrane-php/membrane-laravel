@@ -64,7 +64,6 @@ class RequestValidationTest extends TestCase
                 Method::DELETE,
                 CannotProcessSpecification::methodNotFound(Method::DELETE->value),
             ],
-            // TODO test 406 from unsupported content-types once Membrane is reading content-types from requests
         ];
     }
 

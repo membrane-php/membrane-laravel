@@ -81,16 +81,6 @@ class ApiProblemBuilderTest extends TestCase
                 ),
                 [404 => 'Path Not Found', 405 => 'Method Not Found', 418 => 'I\'m a teapot'],
             ],
-            //TODO where are content types checked for requests?
-//            'content type not supported, applicable apiResponseType' => [
-//                CannotProcessSpecification::unsupportedContent(),
-//                new SymfonyResponse(
-//                    '{"title":"Not Acceptable","type":"Not Accepted","status":406,"detail":"APISpec expects application\/json content"}',
-//                    406,
-//                    ['Content-Type' => 'application/problem+json']
-//                ),
-//                [404 => 'Path Not Found', 405 => 'Method Not Found', 406 => 'Not Accepted', 418 => 'I\'m a teapot'],
-//            ],
         ];
     }
 

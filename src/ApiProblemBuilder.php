@@ -6,7 +6,6 @@ namespace Membrane\Laravel;
 
 use Crell\ApiProblem\ApiProblem;
 use Crell\ApiProblem\HttpConverter;
-use Membrane\OpenAPI\Exception\CannotProcessRequest;
 use Membrane\OpenAPI\Exception\CannotProcessSpecification;
 use Membrane\Renderer\Renderer;
 use Nyholm\Psr7\Factory\Psr17Factory;
@@ -45,7 +44,6 @@ class ApiProblemBuilder
         $errorCode = match ($exception->getCode()) {
             CannotProcessSpecification::PATH_NOT_FOUND => 404,
             CannotProcessSpecification::METHOD_NOT_FOUND => 405,
-//            2 => 406,
             default => $this->errorCode
         };
 
