@@ -11,7 +11,7 @@ return [
     | The file path must be absolute in order to resolve references in api spec
     |
     */
-    'api_spec_file' => base_path() . '/api/pets.yaml',
+    'api_spec_file' => base_path() . '/api/openapi.yaml',
 
     /*
     |--------------------------------------------------------------------------
