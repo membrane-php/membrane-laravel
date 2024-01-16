@@ -4,7 +4,13 @@ declare(strict_types=1);
 
 namespace Membrane\Laravel;
 
+use Membrane\Builder\Builder;
+use Membrane\Console\Command\CacheOpenAPIProcessors;
 use Membrane\Laravel\Middleware\RequestValidation;
+use Membrane\Membrane;
+use Membrane\OpenAPIRouter\Console\Commands\CacheOpenAPIRoutes;
+use Membrane\OpenAPIRouter\Router\Router;
+use Membrane\OpenAPIRouter\Router\ValueObject\RouteCollection;
 
 class ServiceProvider extends \Illuminate\Support\ServiceProvider
 {
@@ -15,6 +21,10 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
     {
         /** @phpstan-ignore-next-line */ // config_path is a laravel framework helper method
         $this->publishes([self::CONFIG_PATH => config_path('membrane.php')], [self::CONFIG_NAME]);
+
+        if ($this->app->runningInConsole()) {
+            $this->commands([CacheOpenAPIRoutes::class, CacheOpenAPIProcessors::class]);
+        }
     }
 
     public function register(): void
@@ -34,5 +44,19 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
         $this->app->when(ApiProblemBuilder::class)
             ->needs('$apiProblemTypes')
             ->giveConfig('membrane.api_problem_response_types');
+
+        $this->app->when(Membrane::class)
+            ->needs('$builders')
+            ->give($this->instantiateBuilders());
+    }
+
+    /** @return Builder[] */
+    private function instantiateBuilders(): array
+    {
+        /** @phpstan-ignore-next-line */ // config is a laravel framework helper method
+        $router = new Router(new RouteCollection(include config('membrane.routes_file')));
+
+        /** @phpstan-ignore-next-line */ // config is a laravel framework helper method
+        return array_map(fn($className) => new $className($router), config('membrane.additional_builders'));
     }
 }
