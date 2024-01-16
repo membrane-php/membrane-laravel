@@ -6,7 +6,7 @@ namespace Membrane\Laravel;
 
 use Crell\ApiProblem\ApiProblem;
 use Crell\ApiProblem\HttpConverter;
-use Membrane\OpenAPI\Exception\CannotProcessRequest;
+use Membrane\OpenAPI\Exception\CannotProcessSpecification;
 use Membrane\Renderer\Renderer;
 use Nyholm\Psr7\Factory\Psr17Factory;
 use Symfony\Component\HttpFoundation\Response as SymfonyResponse;
@@ -39,12 +39,11 @@ class ApiProblemBuilder
         return $this->convertToResponse($problem);
     }
 
-    public function buildFromException(CannotProcessRequest $exception): SymfonyResponse
+    public function buildFromException(CannotProcessSpecification $exception): SymfonyResponse
     {
         $errorCode = match ($exception->getCode()) {
-            0 => 404,
-            1 => 405,
-            2 => 406,
+            CannotProcessSpecification::PATH_NOT_FOUND => 404,
+            CannotProcessSpecification::METHOD_NOT_FOUND => 405,
             default => $this->errorCode
         };
 

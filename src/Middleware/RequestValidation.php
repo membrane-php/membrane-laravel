@@ -11,6 +11,7 @@ use Membrane\Laravel\ApiProblemBuilder;
 use Membrane\Laravel\ToPsr7;
 use Membrane\Membrane;
 use Membrane\OpenAPI\Exception\CannotProcessRequest;
+use Membrane\OpenAPI\Exception\CannotProcessSpecification;
 use Membrane\OpenAPI\Specification\Request as MembraneRequestSpec;
 use Membrane\Result\Result;
 use Symfony\Component\HttpFoundation\Response as SymfonyResponse;
@@ -35,11 +36,10 @@ class RequestValidation
 
         try {
             $specification = MembraneRequestSpec::fromPsr7($this->apiSpecPath, $psr7Request);
-        } catch (CannotProcessRequest $e) {
+            $result = $this->membrane->process($psr7Request, $specification);
+        } catch (CannotProcessSpecification $e) {
             return $this->apiProblemBuilder->buildFromException($e);
         }
-
-        $result = $this->membrane->process($psr7Request, $specification);
 
         $this->container->instance(Result::class, $result);
 

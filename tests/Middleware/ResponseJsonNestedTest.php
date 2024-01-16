@@ -7,6 +7,7 @@ namespace Membrane\Laravel\Middleware;
 use Illuminate\Contracts\Container\Container;
 use Illuminate\Http\Request;
 use Membrane\Laravel\ApiProblemBuilder;
+use Membrane\Laravel\ToSymfony;
 use Membrane\Result\FieldName;
 use Membrane\Result\Message;
 use Membrane\Result\MessageSet;
@@ -19,9 +20,9 @@ use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Response as SymfonyResponse;
 
 
-#[CoversClass('\Membrane\Laravel\Middleware\ResponseJsonNested')]
-#[UsesClass('  \Membrane\Laravel\ApiProblemBuilder')]
-#[UsesClass('  \Membrane\Laravel\ToSymfony')]
+#[CoversClass(ResponseJsonNested::class)]
+#[UsesClass(ApiProblemBuilder::class)]
+#[UsesClass(ToSymfony::class)]
 class ResponseJsonNestedTest extends TestCase
 {
     public static function dataSetsToHandle(): array

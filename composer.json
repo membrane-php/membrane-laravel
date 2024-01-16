@@ -14,7 +14,7 @@
     "illuminate/http": "^9.0 || ^10.0",
     "illuminate/support": "^9.0 || ^10.0",
     "nyholm/psr7": "^1.8",
-    "membrane/membrane": "^0.3.0",
+    "membrane/membrane": "^0.6.0",
     "symfony/psr-http-message-bridge": "^2.1"
   },
   "require-dev": {
@@ -27,6 +27,11 @@
       "providers": [
         "Membrane\\Laravel\\ServiceProvider"
       ]
+    }
+  },
+  "config": {
+    "allow-plugins": {
+      "infection/extension-installer": true
     }
   }
 }

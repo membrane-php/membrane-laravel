@@ -10,7 +10,7 @@ use Illuminate\Http\Response;
 use Membrane\Laravel\ApiProblemBuilder;
 use Membrane\Laravel\ToPsr7;
 use Membrane\Laravel\ToSymfony;
-use Membrane\OpenAPI\Exception\CannotProcessRequest;
+use Membrane\OpenAPI\Exception\CannotProcessSpecification;
 use Membrane\OpenAPI\Method;
 use Membrane\Result\Result;
 use PHPUnit\Framework\Attributes\CoversClass;
@@ -36,8 +36,10 @@ class RequestValidationTest extends TestCase
                 'header' => [],
                 'cookie' => [],
                 'body' => '',
+                'request' => ['method' => 'get', 'operationId' => 'findPets'],
             ]
         );
+
         $apiProblemBuilder = self::createStub(ApiProblemBuilder::class);
         $container = self::createMock(Container::class);
         $sut = new RequestValidation(__DIR__ . '/../fixtures/petstore-expanded.json', $apiProblemBuilder, $container);
@@ -49,28 +51,30 @@ class RequestValidationTest extends TestCase
         $sut->handle(Request::create($url), fn($var) => new Response());
     }
 
-    public static function dataSetsThatThrowCannotProcessRequest(): array
+    public static function dataSetsThatThrowCannotProcessSpecification(): array
     {
         return [
             'path not found' => [
                 '/hats',
                 Method::GET,
-                CannotProcessRequest::pathNotFound('petstore-expanded.json', '/hats'),
+                CannotProcessSpecification::pathNotFound('petstore-expanded.json', '/hats'),
             ],
             'method not found' => [
                 '/pets',
                 Method::DELETE,
-                CannotProcessRequest::methodNotFound(Method::DELETE->value),
+                CannotProcessSpecification::methodNotFound(Method::DELETE->value),
             ],
-            // TODO test 406 from unsupported content-types once Membrane is reading content-types from requests
         ];
     }
 
 
     #[Test]
-    #[DataProvider('dataSetsThatThrowCannotProcessRequest')]
-    public function catchesCannotProcessRequest(string $path, Method $method, CannotProcessRequest $expected): void
-    {
+    #[DataProvider('dataSetsThatThrowCannotProcessSpecification')]
+    public function catchesCannotProcessSpecification(
+        string $path,
+        Method $method,
+        CannotProcessSpecification $expected
+    ): void {
         $apiProblemBuilder = self::createMock(ApiProblemBuilder::class);
         $sut = new RequestValidation(
             __DIR__ . '/../fixtures/petstore-expanded.json',
