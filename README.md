@@ -119,8 +119,8 @@ For example:
 
 ```php
 protected $middleware = [
-  \Membrane\Laravel\RequestValidation::class,
+  \Membrane\Laravel\Middleware\RequestValidation::class,
   \Membrane\Laravel\Middleware\ResponseJsonFlat::class
-    // ...
+  // ...
 ];
 ```
