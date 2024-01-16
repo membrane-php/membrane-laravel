@@ -29,7 +29,9 @@ php artisan vendor:publish --tag="membrane"
 
 #### API Spec File
 
-Set `'api_spec_file'` to the **string** value of the **absolute path** to your OpenAPI Specification.
+This is the **absolute** filepath of your OpenAPI.
+
+By default, it looks for `<your-project-directory>/api/openapi.yaml`.
 
 #### Validation Error Response Code
 
