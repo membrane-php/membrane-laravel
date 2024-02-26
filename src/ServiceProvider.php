@@ -54,6 +54,11 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
     private function instantiateBuilders(): array
     {
         /** @phpstan-ignore-next-line */ // config is a laravel framework helper method
+        if (!file_exists(config('membrane.routes_file')) || empty(config('membrane.additional_builders'))) {
+            return [];
+        }
+
+        /** @phpstan-ignore-next-line */ // config is a laravel framework helper method
         $router = new Router(new RouteCollection(include config('membrane.routes_file')));
 
         /** @phpstan-ignore-next-line */ // config is a laravel framework helper method
