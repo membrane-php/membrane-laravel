@@ -2,8 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Membrane\Laravel;
+namespace Membrane\Laravel\Tests;
 
+use Membrane\Laravel\ApiProblemBuilder;
+use Membrane\Laravel\ToSymfony;
 use Membrane\OpenAPI\Exception\CannotProcessSpecification;
 use Membrane\Renderer\Renderer;
 use PHPUnit\Framework\Attributes\CoversClass;
@@ -17,7 +19,6 @@ use Symfony\Component\HttpFoundation\Response as SymfonyResponse;
 #[UsesClass(ToSymfony::class)]
 class ApiProblemBuilderTest extends TestCase
 {
-
     #[Test]
     public function buildFromRendererTest(): void
     {
@@ -48,7 +49,12 @@ class ApiProblemBuilderTest extends TestCase
             'path not found, no apiResponseTypes' => [
                 CannotProcessSpecification::pathNotFound('api.json', '/pets'),
                 new SymfonyResponse(
-                    '{"title":"Not Found","type":"about:blank","status":404,"detail":"\/pets does not match any specified paths in api.json"}',
+                    json_encode([
+                        'title' => 'Not Found',
+                        'type' => 'about:blank',
+                        'status' => 404,
+                        'detail' => '/pets does not match any specified paths in api.json',
+                    ]),
                     404,
                     ['Content-Type' => 'application/problem+json']
                 ),
@@ -57,7 +63,12 @@ class ApiProblemBuilderTest extends TestCase
             'path not found, no applicable apiResponseType' => [
                 CannotProcessSpecification::pathNotFound('api.json', '/pets'),
                 new SymfonyResponse(
-                    '{"title":"Not Found","type":"about:blank","status":404,"detail":"\/pets does not match any specified paths in api.json"}',
+                    json_encode([
+                        'title' => 'Not Found',
+                        'type' => 'about:blank',
+                        'status' => 404,
+                        'detail' => '/pets does not match any specified paths in api.json',
+                    ]),
                     404,
                     ['Content-Type' => 'application/problem+json']
                 ),
@@ -66,7 +77,12 @@ class ApiProblemBuilderTest extends TestCase
             'path not found, applicable apiResponseType' => [
                 CannotProcessSpecification::pathNotFound('api.json', '/pets'),
                 new SymfonyResponse(
-                    '{"title":"Not Found","type":"Path Not Found","status":404,"detail":"\/pets does not match any specified paths in api.json"}',
+                    json_encode([
+                        'title' => 'Not Found',
+                        'type' => 'Path Not Found',
+                        'status' => 404,
+                        'detail' => '/pets does not match any specified paths in api.json',
+                    ]),
                     404,
                     ['Content-Type' => 'application/problem+json']
                 ),
@@ -75,11 +91,20 @@ class ApiProblemBuilderTest extends TestCase
             'method not found, applicable apiResponseType' => [
                 CannotProcessSpecification::methodNotFound('get'),
                 new SymfonyResponse(
-                    '{"title":"Method Not Allowed","type":"Method Not Found","status":405,"detail":"get operation not specified on path"}',
+                    json_encode([
+                        'title' => 'Method Not Allowed',
+                        'type' => 'Method Not Found',
+                        'status' => 405,
+                        'detail' => 'get operation not specified on path',
+                    ]),
                     405,
                     ['Content-Type' => 'application/problem+json']
                 ),
-                [404 => 'Path Not Found', 405 => 'Method Not Found', 418 => 'I\'m a teapot'],
+                [
+                    404 => 'Path Not Found',
+                    405 => 'Method Not Found',
+                    418 => 'I\'m a teapot',
+                ],
             ],
         ];
     }
@@ -98,7 +123,9 @@ class ApiProblemBuilderTest extends TestCase
 
         self::assertSame($expected->getContent(), $actual->getContent());
         self::assertSame($expected->getStatusCode(), $actual->getStatusCode());
-        self::assertSame($expected->headers->get('Content-Type'), $actual->headers->get('Content-Type'));
+        self::assertSame(
+            $expected->headers->get('Content-Type'),
+            $actual->headers->get('Content-Type')
+        );
     }
-
 }

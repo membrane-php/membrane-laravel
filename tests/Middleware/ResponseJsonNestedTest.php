@@ -2,11 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Membrane\Laravel\Middleware;
+namespace Membrane\Laravel\Tests\Middleware;
 
 use Illuminate\Contracts\Container\Container;
 use Illuminate\Http\Request;
 use Membrane\Laravel\ApiProblemBuilder;
+use Membrane\Laravel\Middleware\ResponseJsonNested;
 use Membrane\Laravel\ToSymfony;
 use Membrane\Result\FieldName;
 use Membrane\Result\Message;
@@ -18,7 +19,6 @@ use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\Attributes\UsesClass;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Response as SymfonyResponse;
-
 
 #[CoversClass(ResponseJsonNested::class)]
 #[UsesClass(ApiProblemBuilder::class)]
@@ -35,11 +35,35 @@ class ResponseJsonNestedTest extends TestCase
             'invalid result returns response with ApiProblem' => [
                 Result::invalid(
                     1,
-                    new MessageSet(new FieldName('id', 'pet'), new Message('must be an integer', [])),
-                    new MessageSet(new FieldName('pet'), new Message('%s is a required field', ['name']))
+                    new MessageSet(
+                        new FieldName('id', 'pet'),
+                        new Message('must be an integer', [])
+                    ),
+                    new MessageSet(
+                        new FieldName('pet'),
+                        new Message('%s is a required field', ['name'])
+                    )
                 ),
                 (new SymfonyResponse(
-                    content: '{"errors":{"errors":[],"fields":{"pet":{"errors":["name is a required field"],"fields":{"id":{"errors":["must be an integer"],"fields":[]}}}}},"title":"Request payload failed validation","type":"about:blank","status":400}',
+                    content: json_encode([
+                        'errors' => [
+                            'errors' => [],
+                            'fields' => [
+                                'pet' => [
+                                    'errors' => ['name is a required field'],
+                                    'fields' => [
+                                        'id' => [
+                                            'errors' => ['must be an integer'],
+                                            'fields' => [],
+                                        ],
+                                    ],
+                                ],
+                            ],
+                        ],
+                        'title' => 'Request payload failed validation',
+                        'type' => 'about:blank',
+                        'status' => 400,
+                    ]),
                     status: 400,
                     headers: ['Content-Type' => ['application/problem+json']],
                 ))->setProtocolVersion('1.1'),
