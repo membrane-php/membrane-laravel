@@ -2,3 +2,6 @@ parameters:
 	level: 9
 	paths:
 		- src
+	ignoreErrors:
+		- '#^Function config not found.$#' # config() is a Laravel helper method
+		- '#^Function config_path not found.$#' # config_path() is a Laravel helper method
