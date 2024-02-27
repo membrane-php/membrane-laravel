@@ -5,10 +5,8 @@ declare(strict_types=1);
 namespace Membrane\Laravel;
 
 use Membrane\Builder\Builder;
-use Membrane\Console\Command\CacheOpenAPIProcessors;
 use Membrane\Laravel\Middleware\RequestValidation;
 use Membrane\Membrane;
-use Membrane\OpenAPIRouter\Console\Commands\CacheOpenAPIRoutes;
 use Membrane\OpenAPIRouter\Router\Router;
 use Membrane\OpenAPIRouter\Router\ValueObject\RouteCollection;
 
@@ -27,8 +25,8 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
 
         if ($this->app->runningInConsole()) {
             $this->commands([
-                CacheOpenAPIRoutes::class,
-                CacheOpenAPIProcessors::class
+                Command\CacheOpenAPIRoutes::class,
+                Command\CacheOpenAPIProcessors::class,
             ]);
         }
     }
