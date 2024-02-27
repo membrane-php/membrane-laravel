@@ -4,7 +4,12 @@
   "license": "MPL-2.0",
   "autoload": {
     "psr-4": {
-      "Membrane\\Laravel\\": "src/",
+      "Membrane\\Laravel\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Membrane\\Laravel\\Tests\\": "tests/",
       "Membrane\\Laravel\\Fixtures\\": "tests/fixtures/"
     }
   },

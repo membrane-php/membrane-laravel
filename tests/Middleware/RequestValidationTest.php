@@ -2,12 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Membrane\Laravel\Middleware;
+namespace Membrane\Laravel\Tests\Middleware;
 
 use Illuminate\Contracts\Container\Container;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Membrane\Laravel\ApiProblemBuilder;
+use Membrane\Laravel\Middleware\RequestValidation;
 use Membrane\Laravel\ToPsr7;
 use Membrane\Laravel\ToSymfony;
 use Membrane\OpenAPI\Exception\CannotProcessSpecification;
@@ -18,7 +19,6 @@ use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\Attributes\UsesClass;
 use PHPUnit\Framework\TestCase;
-
 
 #[CoversClass(RequestValidation::class)]
 #[UsesClass(ApiProblemBuilder::class)]
@@ -31,18 +31,21 @@ class RequestValidationTest extends TestCase
     {
         $url = '/pets?limit=5&tags[]=cat&tags[]=tabby';
         $expected = Result::valid([
-                'path' => [],
-                'query' => ['limit' => 5, 'tags' => ['cat', 'tabby']],
-                'header' => [],
-                'cookie' => [],
-                'body' => '',
-                'request' => ['method' => 'get', 'operationId' => 'findPets'],
-            ]
-        );
+            'path' => [],
+            'query' => ['limit' => 5, 'tags' => ['cat', 'tabby']],
+            'header' => [],
+            'cookie' => [],
+            'body' => '',
+            'request' => ['method' => 'get', 'operationId' => 'findPets'],
+        ]);
 
         $apiProblemBuilder = self::createStub(ApiProblemBuilder::class);
         $container = self::createMock(Container::class);
-        $sut = new RequestValidation(__DIR__ . '/../fixtures/petstore-expanded.json', $apiProblemBuilder, $container);
+        $sut = new RequestValidation(
+            __DIR__ . '/../fixtures/petstore-expanded.json',
+            $apiProblemBuilder,
+            $container
+        );
 
         $container->expects(self::once())
             ->method('instance')
@@ -57,16 +60,20 @@ class RequestValidationTest extends TestCase
             'path not found' => [
                 '/hats',
                 Method::GET,
-                CannotProcessSpecification::pathNotFound('petstore-expanded.json', '/hats'),
+                CannotProcessSpecification::pathNotFound(
+                    'petstore-expanded.json',
+                    '/hats'
+                ),
             ],
             'method not found' => [
                 '/pets',
                 Method::DELETE,
-                CannotProcessSpecification::methodNotFound(Method::DELETE->value),
+                CannotProcessSpecification::methodNotFound(
+                    Method::DELETE->value
+                ),
             ],
         ];
     }
-
 
     #[Test]
     #[DataProvider('dataSetsThatThrowCannotProcessSpecification')]
@@ -87,7 +94,9 @@ class RequestValidationTest extends TestCase
             ->method('buildFromException')
             ->with($expected);
 
-        $sut->handle(Request::create($path, $method->value), fn($p) => new Response());
+        $sut->handle(
+            Request::create($path, $method->value),
+            fn($p) => new Response()
+        );
     }
-
 }
