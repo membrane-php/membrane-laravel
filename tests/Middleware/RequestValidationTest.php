@@ -12,7 +12,7 @@ use Membrane\Laravel\Middleware\RequestValidation;
 use Membrane\Laravel\ToPsr7;
 use Membrane\Laravel\ToSymfony;
 use Membrane\OpenAPI\Exception\CannotProcessSpecification;
-use Membrane\OpenAPI\Method;
+use Membrane\OpenAPIReader\ValueObject\Valid\Enum\Method;
 use Membrane\Result\Result;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
@@ -29,7 +29,7 @@ class RequestValidationTest extends TestCase
     #[Test]
     public function registersResultInstanceInContainer(): void
     {
-        $url = '/pets?limit=5&tags[]=cat&tags[]=tabby';
+        $url = '/pets?limit=5&tags=cat&tags=tabby';
         $expected = Result::valid([
             'path' => [],
             'query' => ['limit' => 5, 'tags' => ['cat', 'tabby']],
