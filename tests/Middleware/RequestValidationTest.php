@@ -33,7 +33,13 @@ class RequestValidationTest extends TestCase
         $expected = Result::valid([
             'path' => [],
             'query' => ['limit' => 5, 'tags' => ['cat', 'tabby']],
-            'header' => [],
+            'header' => [
+                'host' => ['localhost'],
+                'user-agent' => ['Symfony'],
+                'accept' => ['text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8'],
+                'accept-language' => ['en-us,en;q=0.5'],
+                'accept-charset' => ['ISO-8859-1,utf-8;q=0.7,*;q=0.7'],
+            ],
             'cookie' => [],
             'body' => '',
             'request' => ['method' => 'get', 'operationId' => 'findPets'],

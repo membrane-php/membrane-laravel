@@ -10,7 +10,6 @@ use Illuminate\Http\Request;
 use Membrane\Laravel\ApiProblemBuilder;
 use Membrane\Laravel\ToPsr7;
 use Membrane\Membrane;
-use Membrane\OpenAPI\Exception\CannotProcessRequest;
 use Membrane\OpenAPI\Exception\CannotProcessSpecification;
 use Membrane\OpenAPI\Specification\Request as MembraneRequestSpec;
 use Membrane\Result\Result;

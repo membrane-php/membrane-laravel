@@ -20,7 +20,7 @@
     "illuminate/http": "^9.0 || ^10.0",
     "illuminate/support": "^9.0 || ^10.0",
     "nyholm/psr7": "^1.8",
-    "membrane/membrane": "dev-main",
+    "membrane/membrane": "^0.8",
     "membrane/openapi-router": "^0.4.0",
     "symfony/psr-http-message-bridge": "^2.1"
   },
