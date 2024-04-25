@@ -7,8 +7,8 @@ namespace Membrane\Laravel;
 use Membrane\Builder\Builder;
 use Membrane\Laravel\Middleware\RequestValidation;
 use Membrane\Membrane;
-use Membrane\OpenAPIRouter\Router\Router;
-use Membrane\OpenAPIRouter\Router\ValueObject\RouteCollection;
+use Membrane\OpenAPIRouter\Router;
+use Membrane\OpenAPIRouter\RouteCollection;
 
 class ServiceProvider extends \Illuminate\Support\ServiceProvider
 {
