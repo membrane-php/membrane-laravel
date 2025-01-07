@@ -53,9 +53,7 @@ final class CacheOpenAPIProcessors extends Command
         }
 
         $buildRequests = !$this->option('skip-requests');
-        assert(is_bool($buildRequests));
         $buildResponses = !$this->option('skip-responses');
-        assert(is_bool($buildResponses));
 
         $service = new \Membrane\Console\Service\CacheOpenAPIProcessors(
             new ConsoleLogger($this->output)
