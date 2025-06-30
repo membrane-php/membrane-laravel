@@ -14,7 +14,7 @@ The Result object contains the cleaned up data and additional details in the cas
 
 Require the `membrane/laravel` package in your composer.json and update your dependencies:
 
-```text
+```shell
 composer require membrane/laravel
 ```
 
@@ -23,7 +23,7 @@ composer require membrane/laravel
 The defaults are set in `config/membrane.php`.  
 To publish a copy to your own config, use the following:
 
-```text
+```shell
 php artisan vendor:publish --tag="membrane"
 ```
 
@@ -70,7 +70,7 @@ Your response can be in one of the following formats.
 
 `\Membrane\Laravel\Middleware\ResponseJsonFlat`
 
-```text
+```json
 {
     "errors":{
         "pet->id":["must be an integer"],
@@ -86,7 +86,7 @@ Your response can be in one of the following formats.
 
 `\Membrane\Laravel\Middleware\ResponseJsonNested`
 
-```text
+```json
 {
     "errors":{
         "errors":[],

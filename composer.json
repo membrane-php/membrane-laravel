@@ -16,11 +16,11 @@
   "require": {
     "php": "^8.2.0",
     "crell/api-problem": "^3.6.1",
-    "illuminate/console": "^9.0 || ^10.0 || ^11.0",
-    "illuminate/http": "^9.0 || ^10.0 || ^11.0",
-    "illuminate/support": "^9.0 || ^10.0 || ^11.0",
+    "illuminate/console": "^9.0 || ^10.0 || ^11.0 || ^12.0",
+    "illuminate/http": "^9.0 || ^10.0 || ^11.0 || ^12.0",
+    "illuminate/support": "^9.0 || ^10.0 || ^11.0 || ^12.0",
     "nyholm/psr7": "^1.8",
-    "membrane/membrane": "^0.8",
+    "membrane/membrane": "^0.9",
     "membrane/openapi-router": "^0.5",
     "symfony/psr-http-message-bridge": "^7.2"
   },
