@@ -24,7 +24,15 @@ class ResponseJsonFlat
     {
         $result = $this->container->get(Result::class);
 
+        /**
+         * Laravel 12 adds typehints that make this assert unnecessary
+         * Earlier versions of laravel require this assertion
+         * @TODO Remove assertion when support dropped for Laravel 11 or earlier.
+         *
+         * @phpstan-ignore-next-line
+         */
         assert($result instanceof Result);
+
         if (!$result->isValid()) {
             return $this->apiProblemBuilder->buildFromRenderer(new JsonFlat($result));
         }
