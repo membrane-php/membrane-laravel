@@ -24,7 +24,6 @@ class ResponseJsonNested
     {
         $result = $this->container->get(Result::class);
 
-        assert($result instanceof Result);
         if (!$result->isValid()) {
             return $this->apiProblemBuilder->buildFromRenderer(new JsonNested($result));
         }
