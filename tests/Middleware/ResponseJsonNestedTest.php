@@ -75,7 +75,7 @@ class ResponseJsonNestedTest extends TestCase
     #[DataProvider('dataSetsToHandle')]
     public function handleTest(Result $result, SymfonyResponse $expected): void
     {
-        $request = self::createStub(Request::class);
+        $request = new Request();
         $container = self::createMock(Container::class);
         $apiProblemBuilder = new ApiProblemBuilder(400, 'about:blank', []);
         $sut = new ResponseJsonNested($container, $apiProblemBuilder);
